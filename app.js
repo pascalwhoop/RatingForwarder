@@ -22,7 +22,6 @@ var presenterWS = null;
 wss.on('connection', function (ws) {
     presenterWS = ws;
     console.log("presenter connected");
-    ws.send("connection success");
 });
 
 
