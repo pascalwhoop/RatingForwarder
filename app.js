@@ -17,7 +17,7 @@ process.on('uncaughtException', function (err) {
 
 
 //initiate the websocket for our presentation laptop
-wss = new WebSocketServer({port: 8080});
+wss = new WebSocketServer({port: 8888});
 var presenterWS = null;
 wss.on('connection', function (ws) {
     presenterWS = ws;
