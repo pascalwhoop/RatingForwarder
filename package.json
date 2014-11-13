@@ -9,9 +9,8 @@
         "express": "~4.9.0",
         "node-rest-client": "1.0.0",
         "bunyan": "1.0.0",
-        "body-parser": "~1.8.1"
-
-
+        "body-parser": "~1.8.1",
+        "ws": "0.4.32"
 
     }
 }

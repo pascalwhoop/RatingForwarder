@@ -11,6 +11,15 @@ angular.module('ratingApp')
             localStorage.setItem(LS_UID_KEY, $scope.userID);
         }
 
+        //register user with backend
+        $http.post(backendURL + "/api/user/" + $scope.userID)
+            .success(function(data, status, headers, config){
+                //TODO signal success
+            })
+            .error(function(data, status, headers, config){
+                //TODO signal error
+            });
+
         $scope.comment = {
             user: $scope.userID,
             body: ""
@@ -27,6 +36,20 @@ angular.module('ratingApp')
                     //TODO signal error
                 });
         };
+
+        $scope.latestRating = 0;
+        $scope.sendRating = function(rating){
+            //send rating to backend
+            if($scope.latestRating != rating){
+                $http.put(backendURL + "/api/user/" + $scope.userID + "/theory/"+rating)
+                    .success(function(data, status, headers, config){
+                        $scope.latestRating = data.theory;
+                    })
+                    .error(function(data, status, headers, config){
+                        //TODO signal error
+                    });
+            }
+        }
 
 
     });

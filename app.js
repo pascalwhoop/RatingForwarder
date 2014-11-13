@@ -1,9 +1,7 @@
 //dependencies
 var express = require('express');
-var hueControl = require('./local_modules/hueControl.js');
-var ratingLogger = require('./local_modules/ratingHistory.js');
-var loggingStatistics = require('./local_modules/loggingStatistics.js');
-var bodyParser = require('body-parser')
+var WebSocketServer = require('ws').Server;
+var bodyParser = require('body-parser');
 
 
 /* ########     app creationand configuration      ########*/
@@ -18,93 +16,51 @@ process.on('uncaughtException', function (err) {
 });
 
 
+//initiate the websocket for our presentation laptop
+wss = new WebSocketServer({port: 8080});
+var presenterWS = null;
+wss.on('connection', function (ws) {
+    presenterWS = ws;
+});
+
+var sendToLaptop = function (type, data) {
+    if(presenterWS){
+        presenterWS.send({type: type, data: data});
+    }
+    else{
+        console.log("WARNING: no presenter registered yet! no rating will be forwarded");
+    }
+}
+
+
 //host our workshop application as well as its static content
 app.use('/', express.static(__dirname + '/public/www'));
 
-var userRequests = {};
 
 
 // ==================================================================
-//every user in the workshop calls this once he calls the website
+// every user in the workshop calls this once he calls the website
 app.post('/api/user/:username', function (req, res) {
-    var username = req.params.username;
-
-
-    //if user does not yet exist add him
-    if (!userRequests[username]) {
-        console.log("user " + username + " joined the workshop");
-        userRequests[username] = {
-            speed: 0,
-            theory: 0
-        }
-    }
-    res.send(userRequests[username]);
+    sendToLaptop("register", {username: req.params.username});
+    res.send("success");
 });
 
 // ==================================================================
-// user custom textual response
+// forward comments
 
 app.post('/api/user/:username/comment', function (req, res) {
-    var username = req.params.username;
-    var comment = req.body;
-    ratingLogger.logUserComment(username, comment.text);
-    console.log("user comment received");
+    sendToLaptop("comment", {username: req.params.username, comment: req.body});
     res.send("success");
 });
 
 
 // ==================================================================
-// our API for controlling the lights. we take the user requests here
-
-app.put('/api/user/:username/speed/:speed', function (req, res) {
-    var username = req.params.username;
-    var speed = parseInt(req.params.speed);
-
-    console.log("user " + username + " wants speed " + speed);
-    if (speed == 1 || speed == 0 || speed == -1) {
-
-
-        userRequests[username].speed = speed;
-        res.send(userRequests[username]);
-
-        var hue = hueControl.calcSpeedColor(userRequests);
-        var sat = hueControl.calcSaturation(userRequests, "speed");
-        hueControl.setSpeedColor(hue, sat);
-
-        //for later evaluation purposes
-        ratingLogger.logRating(userRequests, username, "speed", speed, {hue: hue, sat: sat});
-    } else {
-        res.send("Error, wrong values submitted");
-    }
-
-});
-
-
-
+// forward ratings
 app.put('/api/user/:username/theory/:theory', function (req, res) {
-    var username = req.params.username;
-    var theory = parseInt(req.params.theory);
+    sendToLaptop("rating", {username: req.params.username, rating: req.params.theory});
+    res.send({theory: req.params.theory});
 
-    console.log("user " + username + " wants theory " + theory);
-
-    if (theory == 1 || theory == 0 || theory == -1) {
-
-        userRequests[username].theory = theory;
-        res.send(userRequests[username]);
-
-        var hue = hueControl.calcTheoryColor(userRequests);
-        var sat = hueControl.calcSaturation(userRequests, "theory");
-        hueControl.setTheoryColor(hue, sat);
-
-        //for later evaluation purposes
-        ratingLogger.logRating(userRequests, username, "theory", theory, {hue: hue, sat: sat});
-    } else {
-        res.send("Error, wrong values submitted");
-    }
 });
-
-
-
 
 // start the server and listen to the port supplied
 var server = app.listen(8080, function () {
