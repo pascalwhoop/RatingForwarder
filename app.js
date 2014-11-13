@@ -28,7 +28,7 @@ wss.on('connection', function (ws) {
 
 var sendToLaptop = function (type, data) {
     if(presenterWS){
-        presenterWS.send({type: type, data: data});
+        presenterWS.send(JSON.serialize({type: type, data: data}));
     }
     else{
         console.log("WARNING: no presenter registered yet! no rating will be forwarded");
