@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
     <title></title>
@@ -20,15 +20,52 @@
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
-  </head>
-  <body ng-app="starter">
+    <script src="js/ratingController.js"></script>
+</head>
+<body ng-app="ratingApp">
 
-    <ion-pane>
-      <ion-header-bar class="bar-stable">
-        <h1 class="title">Ionic Blank Starter</h1>
-      </ion-header-bar>
-      <ion-content>
-      </ion-content>
-    </ion-pane>
-  </body>
+<ion-pane ng-controller="HintCtrl">
+    <ion-header-bar class="bar-stable">
+        <h1 class="title">Rating App</h1>
+    </ion-header-bar>
+    <ion-content scroll="true" has-bouncing="false">
+
+
+        <div id="ratingButtons" class="padding">
+            <!--too fast-->
+           <div class="button-wrapper">
+               <button class="button button-block button-large button-outline button-assertive icon-left">
+                   <i class="ion-minus-circled"></i>
+                   too fast
+               </button>
+           </div>
+            <!--OK-->
+            <div class="button-wrapper">
+            <button class="button button-block button-large button-outline button-stable icon-left">
+                <i class="ion-checkmark-circled"></i>
+                OK
+            </button>
+                </div>
+            <!--too slow-->
+            <div class="button-wrapper">
+            <button class="button button-block button-large button-outline button-positive icon-left">
+                <i class="ion-plus-circled"></i>
+                too slow
+            </button>
+                </div>
+        </div>
+    </ion-content>
+
+
+    <div class="bar bar-footer item-input-inset">
+        <label class="item-input-wrapper">
+            <i class="icon ion-ios7-search placeholder-icon"></i>
+            <input type="text" placeholder="Comment..." ng-model="comment.body">
+        </label>
+        <button class="button button-positive" ng-click="sendComment()">
+            Submit
+        </button>
+    </div>
+</ion-pane>
+</body>
 </html>

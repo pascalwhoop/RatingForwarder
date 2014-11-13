@@ -1,1 +1,21 @@
-/* Empty. Add your own CSS if you like */
+ion-content .scroll{
+    height: 100%;
+}
+
+#ratingButtons
+{
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 100%;
+    padding-bottom: 44px;
+}
+
+#ratingButtons .button-wrapper
+{
+    display: table-row;
+
+}
