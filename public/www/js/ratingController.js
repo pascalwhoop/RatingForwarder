@@ -1,5 +1,5 @@
 angular.module('ratingApp')
-    .controller('HintCtrl', function ($scope, $http) {
+    .controller('HintCtrl', function ($scope, $http, $ionicLoading) {
         var LS_UID_KEY = "oc_rating_user_id";
         var backendURL = "http://ec2-54-93-187-220.eu-central-1.compute.amazonaws.com";
 
@@ -27,13 +27,16 @@ angular.module('ratingApp')
 
         $scope.sendComment = function () {
             //send comment to backend
+            $scope.show();
             $http.post(backendURL + "/api/user/" + $scope.userID + "/comment", $scope.comment)
                 .success(function(data, status, headers, config){
                     $scope.comment.body = "";
+                    $scope.hide();
                     //TODO signal success
                 })
                 .error(function(data, status, headers, config){
                     //TODO signal error
+                    $scope.hide();
                 });
         };
 
@@ -41,15 +44,27 @@ angular.module('ratingApp')
         $scope.sendRating = function(rating){
             //send rating to backend
             if($scope.latestRating != rating){
+                $scope.show();
                 $http.put(backendURL + "/api/user/" + $scope.userID + "/theory/"+rating)
                     .success(function(data, status, headers, config){
-                        $scope.latestRating = data.theory;
+                        $scope.latestRating = rating;
+                        $scope.hide();
                     })
                     .error(function(data, status, headers, config){
                         //TODO signal error
+                        $scope.hide();
                     });
             }
         }
+
+        $scope.show = function() {
+            $ionicLoading.show({
+                template: 'sending...'
+            });
+        };
+        $scope.hide = function(){
+            $ionicLoading.hide();
+        };
 
 
     });
