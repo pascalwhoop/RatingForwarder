@@ -34,21 +34,21 @@
         <div id="ratingButtons" class="padding">
             <!--too fast-->
            <div class="button-wrapper">
-               <button ng-click="sendRating(1)" class="button button-block button-large button-outline button-assertive icon-left">
+               <button ng-click="sendRating(1)" class="button button-block button-large button-outline button-assertive icon-left" ng-disabled="latestRating == 1">
                    <i class="ion-minus-circled"></i>
                    too fast
                </button>
            </div>
             <!--OK-->
             <div class="button-wrapper">
-            <button ng-click="sendRating(0)" class="button button-block button-large button-outline button-stable icon-left">
+            <button ng-click="sendRating(0)" class="button button-block button-large button-outline button-stable icon-left" ng-disabled="latestRating == 0">
                 <i class="ion-checkmark-circled"></i>
                 OK
             </button>
                 </div>
             <!--too slow-->
             <div class="button-wrapper">
-            <button ng-click="sendRating(-1)" class="button button-block button-large button-outline button-positive icon-left">
+            <button ng-click="sendRating(-1)" class="button button-block button-large button-outline button-positive icon-left" ng-disabled="latestRating == -1">
                 <i class="ion-plus-circled"></i>
                 too slow
             </button>
