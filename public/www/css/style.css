@@ -1,4 +1,4 @@
-ion-content .scroll{
+ion-content .scroll, ion-content .row, ion-content .row .col-10, ion-content .row .col-90{
     height: 100%;
 }
 
@@ -11,11 +11,29 @@ ion-content .scroll{
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     height: 100%;
-    padding-bottom: 44px;
 }
 
 #ratingButtons .button-wrapper
 {
     display: table-row;
 
+}
+
+.button-wrapper button{
+    height: 90%;
+}
+
+ion-content{
+    bottom: 44px !important;
+}
+
+#colorRange{
+    background: rgb(50,64,255); /* Old browsers */
+    background: -moz-linear-gradient(bottom, rgb(50,64,255) 0%,  rgb(255,255,255) 26%, rgb(187,255,40) 51%, rgb(255,157,0) 78%, rgb(255,0,0) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left bottom, left top, color-stop(0%,rgb(50,64,255)),  color-stop(26%,rgb(255,255,255)), color-stop(51%,rgb(187,255,40)), color-stop(78%,rgb(255,157,0)), color-stop(100%,rgb(255,0,0))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(bottom, rgb(50,64,255) 0%,rgb(255,255,255) 26%,rgb(187,255,40) 51%,rgb(255,157,0) 78%,rgb(255,0,0) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(bottom, rgb(50,64,255) 0%,rgb(255,255,255) 26%,rgb(187,255,40) 51%,rgb(255,157,0) 78%,rgb(255,0,0) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(bottom, rgb(50,64,255) 0%,rgb(255,255,255) 26%,rgb(187,255,40) 51%,rgb(255,157,0) 78%,rgb(255,0,0) 100%); /* IE10+ */
+    background: linear-gradient(to top, rgb(50,64,255) 0%,rgb(255,255,255) 26%,rgb(187,255,40) 51%,rgb(255,157,0) 78%,rgb(255,0,0) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3240ff', endColorstr='#ff0000',GradientType=0 ); /* IE6-9 */
 }
