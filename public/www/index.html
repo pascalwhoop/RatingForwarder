@@ -30,35 +30,52 @@
     </ion-header-bar>
     <ion-content scroll="true" has-bouncing="false">
 
-          <div class="row">
-              <div class="col-10" id="colorRange"></div>
-              <div class="col-90">
-                  <div id="ratingButtons" class="padding">
-                      <!--too fast-->
-                      <div class="button-wrapper">
-                          <button ng-click="sendRating(-1)" class="button button-block button-large button-outline button-assertive icon-left" ng-disabled="latestRating == -1">
-                              <i class="ion-minus-circled"></i>
-                              too fast
-                          </button>
-                      </div>
-                      <!--OK-->
-                      <div class="button-wrapper">
-                          <button ng-click="sendRating(0)" class="button button-block button-large button-outline button-balanced icon-left" ng-disabled="latestRating == 0">
-                              <i class="ion-checkmark-circled"></i>
-                              OK
-                          </button>
-                      </div>
-                      <!--too slow-->
-                      <div class="button-wrapper">
-                          <button ng-click="sendRating(1)" class="button button-block button-large button-outline button-positive icon-left" ng-disabled="latestRating == 1">
-                              <i class="ion-plus-circled"></i>
-                              too slow
-                          </button>
-                      </div>
-                  </div>
+        <div id="gettingStartedOverlay" ng-hide="gotIt">
+            <!--<p>This application will let you rate our presentation live with direct feedback! The lamps placed up front
+                will change their colors depending on the average rating of all participants. This helps us see, if you
+                like what we are talking about and keeps you from getting bored!</p>-->
+            <p>Diese Applikation lässt Sie unsere Präsentation live bewerten! Die vorne plazierten Lampen ändern ihre
+                Farbe, abhängig von den abgegebenen Bewertungen. Dies hilft und besser auf Ihre Wünsche einzugehen und
+                bewahrt Sie vor langeweile oder zu vielen Informationen. Viel Spaß!</p>
+            <button class="button button-balanced " ng-click="gotIt = true">Got It</button>
+            <br/>
+        </div>
 
-              </div>
-          </div>
+        <div class="row">
+            <div class="col-10" id="colorRange"></div>
+            <div class="col-90">
+                <div id="ratingButtons" class="padding">
+                    <!--too fast-->
+                    <div class="button-wrapper">
+                        <button ng-click="sendRating(-1)"
+                                class="button button-block button-large button-outline button-assertive icon-left"
+                                ng-disabled="latestRating == -1">
+                            <i class="ion-minus-circled"></i>
+                            too fast
+                        </button>
+                    </div>
+                    <!--OK-->
+                    <div class="button-wrapper">
+                        <button ng-click="sendRating(0)"
+                                class="button button-block button-large button-outline button-balanced icon-left"
+                                ng-disabled="latestRating == 0">
+                            <i class="ion-checkmark-circled"></i>
+                            OK
+                        </button>
+                    </div>
+                    <!--too slow-->
+                    <div class="button-wrapper">
+                        <button ng-click="sendRating(1)"
+                                class="button button-block button-large button-outline button-positive icon-left"
+                                ng-disabled="latestRating == 1">
+                            <i class="ion-plus-circled"></i>
+                            too slow
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
     </ion-content>
 

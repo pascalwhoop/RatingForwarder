@@ -27,16 +27,16 @@ angular.module('ratingApp')
 
         $scope.sendComment = function () {
             //send comment to backend
-            $scope.show();
+            $scope.showLoading();
             $http.post(backendURL + "/api/user/" + $scope.userID + "/comment", $scope.comment)
                 .success(function(data, status, headers, config){
                     $scope.comment.body = "";
-                    $scope.hide();
+                    $scope.hideLoading();
                     //TODO signal success
                 })
                 .error(function(data, status, headers, config){
                     //TODO signal error
-                    $scope.hide();
+                    $scope.hideLoading();
                 });
         };
 
@@ -44,25 +44,27 @@ angular.module('ratingApp')
         $scope.sendRating = function(rating){
             //send rating to backend
             if($scope.latestRating != rating){
-                $scope.show();
+                $scope.showLoading();
                 $http.put(backendURL + "/api/user/" + $scope.userID + "/theory/"+rating)
                     .success(function(data, status, headers, config){
                         $scope.latestRating = rating;
-                        $scope.hide();
+                        $scope.hideLoading();
                     })
                     .error(function(data, status, headers, config){
                         //TODO signal error
-                        $scope.hide();
+                        $scope.hideLoading();
                     });
             }
-        }
+        };
 
-        $scope.show = function() {
+
+
+        $scope.showLoading = function() {
             $ionicLoading.show({
                 template: 'sending...'
             });
         };
-        $scope.hide = function(){
+        $scope.hideLoading = function(){
             $ionicLoading.hide();
         };
 
