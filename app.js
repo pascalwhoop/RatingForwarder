@@ -2,6 +2,7 @@
 var express = require('express');
 var WebSocketServer = require('ws').Server;
 var bodyParser = require('body-parser');
+var ratingLogger = require('./local_modules/ratingHistory.js');
 
 
 /* ########     app creationand configuration      ########*/
@@ -45,6 +46,7 @@ app.use('/slides', express.static(__dirname + '/slides'));
 // every user in the workshop calls this once he calls the website
 app.post('/api/user/:username', function (req, res) {
     sendToLaptop("register", {username: req.params.username});
+    ratingLogger.logUserRegistration(req.params.username);
     res.send("success");
 });
 
