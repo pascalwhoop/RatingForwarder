@@ -1,10 +1,14 @@
 var bunyan = require('bunyan');
 
+// index.js
+var path = require('path');
+
+
 var log = bunyan.createLogger({
     name: 'ratingLogger',
     streams: [
         {
-            path: './log/' + new Date().getMonth() + "-" + new Date().getDate() + '_ratingLog.log',
+            path: path.resolve(__dirname) + '/log/' + new Date().getMonth() + "-" + new Date().getDate() + '_ratingLog.log',
             type: 'file'
         }
     ]
