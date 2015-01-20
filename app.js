@@ -39,7 +39,7 @@ var sendToLaptop = function (type, data) {
 
 
 //host our workshop application as well as its static content
-app.use('/', express.static(__dirname + '/public/www'));
+app.use('/rating/', express.static(__dirname + '/public/www'));
 app.use('/slides', express.static(__dirname + '/slides'));
 
 
