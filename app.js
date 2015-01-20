@@ -18,12 +18,14 @@ process.on('uncaughtException', function (err) {
 
 
 //initiate the websocket for our presentation laptop
-wss = new WebSocketServer({port: 8888});
+var port = 8888;
+wss = new WebSocketServer({port: port});
 var presenterWS = null;
 wss.on('connection', function (ws) {
     presenterWS = ws;
     console.log("presenter connected");
 });
+console.log('Listening on port %d', port);
 
 
 var sendToLaptop = function (type, data) {
@@ -37,14 +39,14 @@ var sendToLaptop = function (type, data) {
 
 
 //host our workshop application as well as its static content
-app.use('/', express.static(__dirname + '/public/www'));
+app.use('/rating', express.static(__dirname + '/public/www'));
 app.use('/slides', express.static(__dirname + '/slides'));
 
 
 
 // ==================================================================
 // every user in the workshop calls this once he calls the website
-app.post('/api/user/:username', function (req, res) {
+app.post('/rating/api/user/:username', function (req, res) {
     sendToLaptop("register", {username: req.params.username});
     ratingLogger.logUserRegistration(req.params.username);
     res.send("success");
@@ -53,7 +55,7 @@ app.post('/api/user/:username', function (req, res) {
 // ==================================================================
 // forward comments
 
-app.post('/api/user/:username/comment', function (req, res) {
+app.post('/rating/api/user/:username/comment', function (req, res) {
     sendToLaptop("comment", {username: req.params.username, comment: req.body});
     res.send("success");
 });
@@ -61,7 +63,7 @@ app.post('/api/user/:username/comment', function (req, res) {
 
 // ==================================================================
 // forward ratings
-app.put('/api/user/:username/theory/:theory', function (req, res) {
+app.put('/rating/api/user/:username/theory/:theory', function (req, res) {
     sendToLaptop("rating", {username: req.params.username, rating: req.params.theory});
     res.send({theory: req.params.theory});
 

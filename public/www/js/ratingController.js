@@ -1,7 +1,6 @@
 angular.module('ratingApp')
     .controller('HintCtrl', function ($scope, $http, $ionicLoading) {
         var LS_UID_KEY = "oc_rating_user_id";
-        var backendURL = "http://ec2-54-93-187-220.eu-central-1.compute.amazonaws.com";
 
 
         $scope.userID = localStorage.getItem(LS_UID_KEY);
@@ -12,7 +11,7 @@ angular.module('ratingApp')
         }
 
         //register user with backend
-        $http.post(backendURL + "/api/user/" + $scope.userID)
+        $http.post("/rating/api/user/" + $scope.userID)
             .success(function(data, status, headers, config){
                 //TODO signal success
             })
@@ -28,7 +27,7 @@ angular.module('ratingApp')
         $scope.sendComment = function () {
             //send comment to backend
             $scope.showLoading();
-            $http.post(backendURL + "/api/user/" + $scope.userID + "/comment", $scope.comment)
+            $http.post("/rating/api/user/" + $scope.userID + "/comment", $scope.comment)
                 .success(function(data, status, headers, config){
                     $scope.comment.body = "";
                     $scope.hideLoading();
@@ -45,7 +44,7 @@ angular.module('ratingApp')
             //send rating to backend
             if($scope.latestRating != rating){
                 $scope.showLoading();
-                $http.put(backendURL + "/api/user/" + $scope.userID + "/theory/"+rating)
+                $http.put("/rating/api/user/" + $scope.userID + "/theory/"+rating)
                     .success(function(data, status, headers, config){
                         $scope.latestRating = rating;
                         $scope.hideLoading();
