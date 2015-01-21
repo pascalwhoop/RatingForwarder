@@ -56,7 +56,7 @@ app.post('/rating/api/user/:username', function (req, res) {
 // forward comments
 
 app.post('/rating/api/user/:username/comment', function (req, res) {
-    sendToLaptop("comment", {username: req.params.username, comment: req.body});
+    sendToLaptop("comment", {username: req.params.username, comment: req.body.body});
     res.send("success");
 });
 
